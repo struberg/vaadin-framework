@@ -18,7 +18,7 @@ public class RichTextAreaDeclarativeTest
         RichTextArea rta = new RichTextArea();
         rta.setNullRepresentation("");
         rta.setNullSettingAllowed(true);
-        rta.setValue("<b>Header</b> \n<br>Some text");
+        rta.setValue("<b>Header</b>\n<br>\nSome text");
         return rta;
     }
 

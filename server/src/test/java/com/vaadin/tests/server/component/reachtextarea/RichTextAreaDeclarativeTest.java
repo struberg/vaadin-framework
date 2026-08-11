@@ -14,7 +14,7 @@ public class RichTextAreaDeclarativeTest
     @Override
     public void valueDeserialization()
             throws InstantiationException, IllegalAccessException {
-        String value = "<b>Header</b> \n<br>Some text";
+        String value = "<b>Header</b>\n<br>\n Some text";
         String design = String.format("<%s>\n      %s\n      </%s>",
                 getComponentTag(), value, getComponentTag());
 
@@ -28,7 +28,7 @@ public class RichTextAreaDeclarativeTest
     @Override
     public void readOnlyValue()
             throws InstantiationException, IllegalAccessException {
-        String value = "<b>Header</b> \n<br>Some text";
+        String value = "<b>Header</b>\n<br>\n S ome text";
         String design = String.format("<%s readonly>\n      %s\n      </%s>",
                 getComponentTag(), value, getComponentTag());
 
