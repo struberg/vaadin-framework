@@ -14,7 +14,6 @@
         <jetty.version>9.4.38.v20210224</jetty.version>
         <phantomjs.version>2.1.1</phantomjs.version>
         <vaadin.version>${project.version}</vaadin.version>
-        <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
