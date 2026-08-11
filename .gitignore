@@ -2,6 +2,7 @@
 .classpath
 .project
 .settings
+.flattened-pom.xml
 
 # /
 /.cvsignore
