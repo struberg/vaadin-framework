@@ -47,6 +47,32 @@
 
     <build>
         <plugins>
+            <!-- Resolve atmosphere javascript war to a known path -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-atmosphere-js</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.vaadin.external.atmosphere.client</groupId>
+                                    <artifactId>javascript</artifactId>
+                                    <type>war</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <destFileName>atmosphere-javascript.war</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
@@ -61,6 +87,8 @@
                             <target>
                                 <property name="javascript.unpack"
                                     location="${project.build.directory}/temp" />
+                                <property name="atmosphere.js.war"
+                                    location="${project.build.directory}/atmosphere-javascript.war" />
                                 <property name="vaadinPush.js"
                                     location="${project.build.outputDirectory}/VAADIN/vaadinPush.debug.js" />
                                 <property name="templates.dir"
@@ -68,7 +96,7 @@
 
                                 <!-- Unzip to temp dir -->
                                 <unzip
-                                    src="${maven.dependency.com.vaadin.external.atmosphere.client.javascript.war.path}"
+                                    src="${atmosphere.js.war}"
                                     dest="${javascript.unpack}">
                                     <patternset>
                                         <include name="**/atmosphere.js" />
