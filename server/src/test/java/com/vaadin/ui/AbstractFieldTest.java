@@ -41,13 +41,13 @@ public class AbstractFieldTest extends EasyMockSupport {
     TextField field;
 
     ValueChangeListener<String> l;
-    Capture<ValueChangeEvent<String>> capture;
+    @SuppressWarnings("unchecked")
+    private Capture<ValueChangeEvent<String>> capture = Capture.newInstance();
 
     @Before
     public void setUp() {
         field = new TextField();
         l = mockListener();
-        capture = new Capture<>();
     }
 
     @Test

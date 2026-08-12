@@ -103,8 +103,8 @@ public class GridMultiSelectionModelTest {
 
         grid.setItems(PERSON_A, PERSON_B, PERSON_C);
 
-        currentSelectionCapture = new Capture<>();
-        oldSelectionCapture = new Capture<>();
+        currentSelectionCapture = Capture.newInstance();
+        oldSelectionCapture = Capture.newInstance();
         events = new AtomicInteger();
 
         selectionModel.addMultiSelectionListener(event -> {
@@ -137,7 +137,7 @@ public class GridMultiSelectionModelTest {
         customGrid.setItems("Foo", "Bar", "Baz");
 
         List<String> selectionChanges = new ArrayList<>();
-        Capture<List<String>> oldSelectionCapture = new Capture<>();
+        Capture<List<String>> oldSelectionCapture = Capture.newInstance();
         ((MultiSelectionModelImpl<String>) customGrid.getSelectionModel())
                 .addMultiSelectionListener(event -> {
                     selectionChanges.addAll(event.getValue());

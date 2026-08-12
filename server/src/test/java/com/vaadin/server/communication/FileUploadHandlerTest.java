@@ -2,13 +2,14 @@ package com.vaadin.server.communication;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -48,9 +49,11 @@ public class FileUploadHandlerTest {
     private final String variableName = "name";
     private final String expectedSecurityKey = "key";
 
+    private AutoCloseable closeable;
+
     @Before
     public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
 
         handler = new FileUploadHandler();
 
@@ -122,6 +125,13 @@ public class FileUploadHandlerTest {
                 null, null, null);
     }
 
+    @After
+    public void tearDown() throws Exception {
+        if (closeable != null) {
+            closeable.close();
+        }
+    }
+
     @Test
     public void responseIsSentOnCorrectSecurityKey() throws IOException {
         when(connectorTracker.getSeckey(streamVariable))
@@ -139,7 +149,7 @@ public class FileUploadHandlerTest {
 
         handler.handleRequest(session, request, response);
 
-        verifyZeroInteractions(responseOutput);
+        verifyNoInteractions(responseOutput);
     }
 
     @Test
@@ -148,6 +158,6 @@ public class FileUploadHandlerTest {
 
         handler.handleRequest(session, request, response);
 
-        verifyZeroInteractions(responseOutput);
+        verifyNoInteractions(responseOutput);
     }
 }

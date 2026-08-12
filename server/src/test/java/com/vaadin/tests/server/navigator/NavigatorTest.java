@@ -106,7 +106,7 @@ public class NavigatorTest {
         }
 
         public TestNavigator(UI ui) {
-            super(ui, EasyMock.createMock(ViewDisplay.class));
+            super(ui, (ViewDisplay) EasyMock.createMock(ViewDisplay.class));
         }
 
         public View getView(String viewAndParameters) {

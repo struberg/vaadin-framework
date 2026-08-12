@@ -38,7 +38,7 @@ public class HugeFileUploadTest {
 
     @Before
     public void setup() throws IOException {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         // 0= UIid, 1 = cid, 2= name, 3 = sec key
         when(request.getPathInfo()).thenReturn("/" + UPLOAD_URL_PREFIX + UI_ID
                 + "/" + CONN_ID + "/var/" + SEC_KEY);

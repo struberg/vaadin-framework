@@ -434,14 +434,14 @@ public class GeneratedPropertyContainerBasicTest
 
     private Capture<ItemAddEvent> captureAddEvent(
             ItemSetChangeListener addListener) {
-        Capture<ItemAddEvent> capturedEvent = new Capture<ItemAddEvent>();
+        Capture<ItemAddEvent> capturedEvent = Capture.newInstance();
         addListener.containerItemSetChange(EasyMock.capture(capturedEvent));
         return capturedEvent;
     }
 
     private Capture<ItemRemoveEvent> captureRemoveEvent(
             ItemSetChangeListener removeListener) {
-        Capture<ItemRemoveEvent> capturedEvent = new Capture<ItemRemoveEvent>();
+        Capture<ItemRemoveEvent> capturedEvent = Capture.newInstance();
         removeListener.containerItemSetChange(EasyMock.capture(capturedEvent));
         return capturedEvent;
     }

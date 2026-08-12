@@ -355,7 +355,7 @@ public class GridColumnsTest {
         // prepare a listener mock that captures the argument
         ColumnResizeListener mock = EasyMock
                 .createMock(ColumnResizeListener.class);
-        Capture<ColumnResizeEvent> capturedEvent = new Capture<ColumnResizeEvent>();
+        Capture<ColumnResizeEvent> capturedEvent = Capture.newInstance();
         mock.columnResize(
                 and(capture(capturedEvent), isA(ColumnResizeEvent.class)));
         EasyMock.expectLastCall().once();

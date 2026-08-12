@@ -163,7 +163,7 @@ public class GridTest {
     public void testAddSelectionListener_singleSelectMode() {
         grid.setItems("foo", "bar", "baz");
 
-        Capture<SelectionEvent<String>> eventCapture = new Capture<>();
+        Capture<SelectionEvent<String>> eventCapture = Capture.newInstance();
 
         grid.addSelectionListener(event -> eventCapture.setValue(event));
 
@@ -199,7 +199,7 @@ public class GridTest {
         grid.setItems("foo", "bar", "baz");
         grid.setSelectionMode(SelectionMode.MULTI);
 
-        Capture<SelectionEvent<String>> eventCapture = new Capture<>();
+        Capture<SelectionEvent<String>> eventCapture = Capture.newInstance();
 
         grid.addSelectionListener(event -> eventCapture.setValue(event));
 

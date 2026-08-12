@@ -3,9 +3,9 @@ package com.vaadin.server;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isNull;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +35,7 @@ public class VaadinPortletRequestTest {
 
     @Test
     public void portletPreferenceIsFetched() {
-        when(preferences.getValue(eq("foo"), anyString())).thenReturn("bar");
+        when(preferences.getValue(eq("foo"), isNull())).thenReturn("bar");
 
         String value = sut.getPortletPreference("foo");
 
@@ -44,7 +44,7 @@ public class VaadinPortletRequestTest {
 
     @Test
     public void defaultValueForPortletPreferenceIsNull() {
-        when(preferences.getValue(anyString(), isNull(String.class)))
+        when(preferences.getValue(anyString(), isNull()))
                 .thenReturn(null);
 
         String value = sut.getPortletPreference("foo");
