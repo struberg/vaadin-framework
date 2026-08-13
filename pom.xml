@@ -564,7 +564,6 @@
                 <module>client-compiler</module>
                 <module>client-compiled</module>
                 <module>themes</module>
-                <module>uitest</module>
                 <module>liferay</module>
                 <module>liferay-integration</module>
                 <module>osgi-integration</module>
@@ -575,7 +574,11 @@
                 <module>compatibility-client-compiled</module>
                 <module>compatibility-shared</module>
                 <module>compatibility-themes</module>
+<!--
+not supported as it's not ALv2
+                <module>uitest</module>
                 <module>testbench-api</module>
+-->
                 <module>bom</module>
             </modules>
         </profile>

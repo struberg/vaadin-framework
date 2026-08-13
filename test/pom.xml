@@ -26,6 +26,7 @@
         <!-- Allow installing for local testing purposes. -->
         <install.skip>true</install.skip>
     </properties>
+<!--
 
     <repositories>
         <repository>
@@ -50,6 +51,7 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+-->
 
     <dependencyManagement>
         <dependencies>
@@ -135,6 +137,7 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-testbench-api</artifactId>
+            <version>8.14.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

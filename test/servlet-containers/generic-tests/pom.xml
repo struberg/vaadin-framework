@@ -24,6 +24,7 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-testbench-api</artifactId>
+            <version>8.14.3</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
