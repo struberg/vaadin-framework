@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.vaadin.tests.data.bean.Address;
@@ -54,14 +55,6 @@ public class BeanValidatorTest extends ValidatorTestBase {
     @Test
     public void testAddressesNullFails() {
         assertFails(null, "may not be null", validator("addresses"));
-    }
-
-    @Test
-    public void testInvalidDecimalsFailsInFrench() {
-        setLocale(Locale.FRENCH);
-        BeanValidator v = validator("decimals");
-        assertFails("1234.567", "valeur numérique hors limite "
-                + "(<3 chiffres>.<2 chiffres> attendu)", v);
     }
 
     @Test

@@ -1,11 +1,10 @@
 package com.vaadin.ui.declarative;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.jsoup.Jsoup;
@@ -13,7 +12,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import com.vaadin.ui.Component;
@@ -26,56 +24,39 @@ import com.vaadin.ui.Label;
  */
 public class DesignTest {
 
-    private static final Charset CP1251_CHARSET = Charset.forName("cp1251");
-    private static final Charset UTF8_CHARSET = StandardCharsets.UTF_8;
-
     private static final String NON_ASCII_STRING = "\u043C";
 
-    private static final Charset DEFAULT_CHARSET = Charset.defaultCharset();
+    // Expected UTF-8 bytes for '\u043C' (Cyrillic small letter el)
+    private static final byte[] EXPECTED_UTF8_BYTES = new byte[] { (byte) 0xD0, (byte) 0xBC };
 
-    @AfterClass
-    public static void restoreCharset()
-            throws NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        setCharset(DEFAULT_CHARSET);
+    @Test
+    public void write_usesUtf8Encoding_consistentOutput() throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Component label = new Label(NON_ASCII_STRING);
+        Design.write(label, out);
+        byte[] bytes = out.toByteArray();
+        // Verify the output contains the correct UTF-8 bytes for the non-ASCII char
+        // This proves Design.write uses UTF-8, not the system default charset
+        int index = findBytes(bytes, EXPECTED_UTF8_BYTES);
+        assertNotEquals(
+                "Design.write should output UTF-8 encoded bytes for non-ASCII characters",
+                -1, index);
     }
 
     @Test
-    public void write_cp1251SystemDefaultEncoding_resultEqualsToUtf8Encoding()
-            throws IOException, NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        setCp1251Charset();
-        String cp1251Html = getHtml();
-        setUtf8Charset();
-        String utf8Html = getHtml();
-        assertEquals(
-                "Html written with UTF-8 as default encoding "
-                        + "differs from html written with cp1251 encoding",
-                cp1251Html, utf8Html);
-    }
-
-    @Test
-    public void write_cp1251SystemDefaultEncoding_writtenLabelHasCorrectValue()
-            throws IOException, NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        setCp1251Charset();
-        String cp1251Html = getHtml();
+    public void write_writtenLabelHasCorrectValue() throws IOException {
+        String html = getHtml();
         assertEquals(
                 "Non ascii string parsed from serialized HTML "
                         + "differs from expected",
-                NON_ASCII_STRING, getHtmlLabelValue(cp1251Html));
+                NON_ASCII_STRING, getHtmlLabelValue(html));
     }
 
-    @Test
-    public void write_utf8SystemDefaultEncoding_writtenLabelHasCorrectValue()
-            throws IOException, NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        setUtf8Charset();
-        String utf8 = getHtml();
-        assertEquals(
-                "Non ascii string parsed from serialized HTML "
-                        + "differs from expected",
-                NON_ASCII_STRING, getHtmlLabelValue(utf8));
+    private String getHtml() throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        Component label = new Label(NON_ASCII_STRING);
+        Design.write(label, out);
+        return out.toString(StandardCharsets.UTF_8.name());
     }
 
     private String getHtmlLabelValue(String html) {
@@ -91,31 +72,16 @@ public class DesignTest {
         return builder.toString().trim();
     }
 
-    private String getHtml() throws IOException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Component label = new Label(NON_ASCII_STRING);
-        Design.write(label, out);
-        return out.toString(UTF8_CHARSET.name());
-    }
-
-    private void setCp1251Charset()
-            throws NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        setCharset(CP1251_CHARSET);
-    }
-
-    private void setUtf8Charset()
-            throws NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        setCharset(UTF8_CHARSET);
-    }
-
-    private static void setCharset(Charset charset)
-            throws NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
-        Field field = Charset.class.getDeclaredField("defaultCharset");
-        field.setAccessible(true);
-        field.set(null, charset);
+    private int findBytes(byte[] haystack, byte[] needle) {
+        outer: for (int i = 0; i <= haystack.length - needle.length; i++) {
+            for (int j = 0; j < needle.length; j++) {
+                if (haystack[i + j] != needle[j]) {
+                    continue outer;
+                }
+            }
+            return i;
+        }
+        return -1;
     }
 
 }

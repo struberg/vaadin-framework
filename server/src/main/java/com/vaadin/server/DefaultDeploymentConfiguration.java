@@ -134,7 +134,7 @@ public class DefaultDeploymentConfiguration
                 pkgName = null;
             }
         }
-        if (pkgName == null) {
+        if (pkgName == null || pkgName.isEmpty()) {
             pkgName = "";
         } else {
             pkgName += '.';

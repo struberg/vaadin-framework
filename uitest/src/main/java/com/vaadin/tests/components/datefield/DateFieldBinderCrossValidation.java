@@ -3,19 +3,14 @@ package com.vaadin.tests.components.datefield;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.gargoylesoftware.htmlunit.javascript.host.html.FormField;
 
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.data.Binder;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.shared.ui.ErrorLevel;
 import com.vaadin.tests.components.AbstractTestUI;
-import com.vaadin.tests.components.AbstractTestUIWithLog;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 
 @Widgetset("com.vaadin.DefaultWidgetSet")
 public class DateFieldBinderCrossValidation extends AbstractTestUI {
